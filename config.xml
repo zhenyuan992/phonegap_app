@@ -7,7 +7,7 @@
 
 <!-- versionCode is optional and Android only -->
 
-  <name>my Bao Bei</name>
+  <name>cropping sample1</name>
 
   <description>
       An example for cropping images on the phone.
