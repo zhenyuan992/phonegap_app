@@ -214,31 +214,7 @@
                 });
 
             });
-            function picChange(evt) {
-                //bring selected photo in
-                //get files captured through input
-                var fileInput = evt.target.files;
-                if (fileInput.length > 0) {
-                    //get the files
-                    //window url 
-                    var windowURL = window.URL || window.webkitURL;
-                    //pic url
-                    var picURL = windowURL.createObjectURL(fileInput[0]);
-                    //get canvas
-                    var photoCanvas = document.getElementById("capturedPhoto");
-                    var ctx = photoCanvas.getContext("2d");
-                    //create image
-                    var photo = new Image();
-                    photo.onload = function () {
-                        //draw photo into canvas when ready
-                        ctx.drawImage(photo, 0, 0, 500, 400);
-                    };
-                    //load photo into canvas
-                    photo.src = picURL;
-                    //release object url
-                    windowURL.revokeObjectURL(picURL);
-                }
-            }
+
 
         </script>
         <link rel="stylesheet" href="demo_files/main.css" type="text/css" />
@@ -262,23 +238,59 @@
                             <h1>Basic Handler to crop pictures</h1>
                         </div>
                         <div>
+                            <style>
+  .thumb {
+    height: 75px;
+    border: 1px solid #000;
+    margin: 10px 5px 0 0;
+  }
+</style>
+
+<input type="file" accept="image/*" id="files" name="files[]" multiple />
+
+
+<script>
+  function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+
+    // Loop through the FileList and render image files as thumbnails.
+    for (var i = 0, f; f = files[i]; i++) {
+
+      // Only process image files.
+      if (!f.type.match('image.*')) {
+        continue;
+      }
+
+      var reader = new FileReader();
+
+      // Closure to capture the file information.
+      reader.onload = (function(theFile) {
+        return function(e) {
+          // Render thumbnail.
+          var span = document.createElement('span');
+          span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                            '" title="', escape(theFile.name), '"/>'].join('');
+          document.getElementById('list').insertBefore(span, null);
+        };
+      })(f);
+
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(f);
+    }
+  }
+
+  document.getElementById('files').addEventListener('change', handleFileSelect, false);
+</script>
+
+                        </div>
+                        <div>
 
                             <p>Upload your photo: </p>
                             <button class="btn" id="uploadd"
                                     onclick="alert('Photo are uploaded, choose your file size')">
                                 Upload
                             </button>
-                            <p>
-                                Choose a picture from your device or capture one with your camera now:
-                            </p>
-                            <input type="file" accept="image/*" onchange="picChange(event)"/>
-                            <p>
-                                Photo:
-                            </p>
-                            <div>
-                            <canvas id="capturedPhoto" width="500" height="400">
-                            </canvas>
-                            </div>
+                            <output id="list"></output>
                         </div>
                         <!--<div class="optlist">
                             <p>Choose your size</p>
