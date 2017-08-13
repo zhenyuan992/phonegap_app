@@ -1,97 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Basic Handler | Jcrop Demo</title>
-  <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <head>
+        <title>Basic Handler | Jcrop Demo</title>
+        <!--<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/jquery.Jcrop.js"></script>
+        <script src="../js/haha.js"></script>
+        <script type="text/javascript">
 
-<script src="../js/jquery.min.js"></script>
-<script src="../js/jquery.Jcrop.js"></script>
-<script type="text/javascript">
+            jQuery(function ($) {
+                var jcrop_api;
+                $('#target').Jcrop({
+                    onChange: showCoords,
+                    onSelect: showCoords,
+                    onRelease: clearCoords
+                }, function () {
+                    jcrop_api = this;
+                });
+                $('#coords').on('change', 'input', function (e) {
+                    var x1 = $('#x1').val(),
+                            x2 = $('#x2').val(),
+                            y1 = $('#y1').val(),
+                            y2 = $('#y2').val();
+                    jcrop_api.setSelect([x1, y1, x2, y2]);
+                });
+            });
+            // Simple event handler, called from onChange and onSelect
+            // event handlers, as per the Jcrop invocation above
+            function showCoords(c)
+            {
+                $('#x1').val(c.x);
+                $('#y1').val(c.y);
+                $('#x2').val(c.x2);
+                $('#y2').val(c.y2);
+                $('#w').val(c.w);
+                $('#h').val(c.h);
+            }
+            ;
+            function clearCoords()
+            {
+                $('#coords input').val('');
+            }
+            ;
 
-  jQuery(function($){
-    var jcrop_api;
-    $('#target').Jcrop({
-      onChange:   showCoords,
-      onSelect:   showCoords,
-      onRelease:  clearCoords
-    },function(){
-      jcrop_api = this;
-    });
-    $('#coords').on('change','input',function(e){
-      var x1 = $('#x1').val(),
-          x2 = $('#x2').val(),
-          y1 = $('#y1').val(),
-          y2 = $('#y2').val();
-      jcrop_api.setSelect([x1,y1,x2,y2]);
-    });
-  });
-  // Simple event handler, called from onChange and onSelect
-  // event handlers, as per the Jcrop invocation above
-  function showCoords(c)
-  {
-    $('#x1').val(c.x);
-    $('#y1').val(c.y);
-    $('#x2').val(c.x2);
-    $('#y2').val(c.y2);
-    $('#w').val(c.w);
-    $('#h').val(c.h);
-  };
-  function clearCoords()
-  {
-    $('#coords input').val('');
-  };
-</script>
-<link rel="stylesheet" href="demo_files/main.css" type="text/css" />
-<link rel="stylesheet" href="demo_files/demos.css" type="text/css" />
-<link rel="stylesheet" href="../css/jquery.Jcrop.css" type="text/css" />
+            $('#rr4').click(function (e) {
+                jcrop_api.setOptions({allowResize: false});
+                jcrop_api.focus();
+            });
 
-<style>
-    img{
-width: 100%;
-height: 100%;
-max-height: 300px;
-}
-</style>
-</head>
-<body>
+        </script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
+        <link rel="stylesheet" href="demo_files/main.css" type="text/css" />
+        <link rel="stylesheet" href="demo_files/demos.css" type="text/css" />
+        <link rel="stylesheet" href="../css/jquery.Jcrop.css" type="text/css" />
+        <style type="text/css">
+            .optdual { position: relative; }
+            .optdual .offset { position: absolute; left: 18em; }
+            .optlist label { width: 16em; display: block; }
+            #dl_links { margin-top: .5em; }
 
-<div class="container-fluid">
-<div class="row">
-<div class="span8">
-<div class="jc-demo-box">
+        </style>
+        <style>
+            img{
+                width: 100%;
+                height: 100%;
+                max-height: 300px;
+            }
+        </style>
+    </head>
+    <body>
 
-<div class="page-header">
-<h1>Basic Handler to crop pictures</h1>
-</div>
-  <!-- This is the image we're attaching Jcrop to -->
-  <img src="demo_files/sago.jpg" id="target" alt="[Jcrop Example]" />
-  <!-- This is the form that our event handler fills -->
-  <form id="coords"
-    class="coords"
-    onsubmit="return false;"
-    action="http://example.com/post.php">
-    <div class="inline-labels">
-    <label>X1 <input type="text" size="4" id="x1" name="x1" /></label>
-    <label>Y1 <input type="text" size="4" id="y1" name="y1" /></label>
-    <label>X2 <input type="text" size="4" id="x2" name="x2" /></label>
-    <label>Y2 <input type="text" size="4" id="y2" name="y2" /></label>
-    <label>W <input type="text" size="4" id="w" name="w" /></label>
-    <label>H <input type="text" size="4" id="h" name="h" /></label>
-    </div>
-  </form>
-  <div class="description">
-  <p>
-    <b>An example with a basic event handler.</b> Here we've tied
-    several form values together with a simple event handler invocation.
-    The result is that the form values are updated in real-time as
-    the selection is changed using Jcrop's <em>onChange</em> handler.
-  </p>
-  </div>
-</div>
-</div>
-</div>
-</div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="span8">
+                    <div class="jc-demo-box">
+                        <div class="page-header">
+                            <h1>Basic Handler to crop pictures</h1>
+                        </div>
+                        <div>
+                            <p>Upload your photo: </p>
+                            <button class="btn" 
+                                    onclick="alert('Photo are uploaded, choose your file size')">
+                                Upload
+                            </button>
+                        </div>
+                        <div class="optlist">
+                            <p>Choose your size</p>
+                            <label><button class="btn" id="rr4">4R</button></label>
+                            <label><button class="btn" id="rr5">5R</button></label>
+                            <label><button class="btn" id="rr6">6R</button></label>
+                        </div>
+                        <div class="page-header">
+                            <h1>Basic Handler to crop pictures</h1>
+                        </div>
+                        <!-- This is the image we're attaching Jcrop to -->
+                        <img src="demo_files/sago.jpg" id="target" alt="[Jcrop Example]" />
+                        <!-- This is the form that our event handler fills -->
+                        <form id="coords"
+                              class="coords"
+                              onsubmit="return false;">
+                            <!--                              action="http://example.com/post.php"-->
 
-</body>
+                            <div class="inline-labels">
+                                <label>X1 <input type="text" size="4" id="x1" name="x1" /></label>
+                                <label>Y1 <input type="text" size="4" id="y1" name="y1" /></label>
+                                <label>X2 <input type="text" size="4" id="x2" name="x2" /></label>
+                                <label>Y2 <input type="text" size="4" id="y2" name="y2" /></label>
+                                <label>W <input type="text" size="4" id="w" name="w" /></label>
+                                <label>H <input type="text" size="4" id="h" name="h" /></label>
+                            </div>
+                        </form>
+                        <div class="description">
+                            <p>
+                                <b>An example with a basic event handler.</b> Here we've tied
+                                several form values together with a simple event handler invocation.
+                                The result is that the form values are updated in real-time as
+                                the selection is changed using Jcrop's <em>onChange</em> handler.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
 </html>
 
