@@ -27,13 +27,22 @@ window.Page2View = Backbone.View.extend({
         return this;
     }
 });
+window.Page3View = Backbone.View.extend({
 
+    template:_.template($('#page3').html()),
+
+    render:function (eventName) {
+        $(this.el).html(this.template());
+        return this;
+    }
+});
 var AppRouter = Backbone.Router.extend({
 
     routes:{
         "":"home",
         "page1":"page1",
-        "page2":"page2"
+        "page2":"page2",
+        "page3":"page3"
     },
 
     initialize:function () {
@@ -58,6 +67,10 @@ var AppRouter = Backbone.Router.extend({
     page2:function () {
         console.log('#page2');
         this.changePage(new Page2View());
+    },
+    page3:function () {
+        console.log('#page3');
+        this.changePage(new Page3View());
     },
 
     changePage:function (page) {
