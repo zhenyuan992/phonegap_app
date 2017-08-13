@@ -21,6 +21,7 @@
             <ul data-role="listview"  data-inset="true">
                 <li><a href="#page1">Page 1</a></li>
                 <li><a href="#page2">Page 2</a></li>
+                <li><a href="#page3">to submit printing click here</a></li>
             </ul>
 			<ul>
 				<li><a href="demos/tutorial1.html">Hello World</a>
@@ -77,7 +78,29 @@
         </div>
 
     </script>
+    <script type="text/template" id="page3">
 
+        <div data-role="header">
+            <a href="#" data-icon="back" class="back ui-btn-left">Back</a>
+            <h1>This is where you upload your photos for printing</h1>
+        </div>
+
+        <div data-role="content">
+            <p>choose certain options </p>
+            <button type=button
+                onclick="alert('This 15-20 minute piece was composed by George Gershwin.')">
+                Show hint
+            </button>
+            <p> Choose the size </p>
+            <div class="optlist">
+                <label><input type="checkbox" id="can_click2" />4R</label>
+                <label><input type="checkbox" id="can_move2" />5R</label>
+                <label><input type="checkbox" id="can_size2" />8R</label>
+            </div>
+            
+        </div>
+
+    </script>
     <!-- The Scripts -->
     <script src="lib/jquery-1.7.1.min.js"></script>
     <script src="js/jqm-config.js"></script>
