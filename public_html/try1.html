@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>welcome</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    </head>
+    <body>
+        <div>
+            <h2> Welcome to printing service</h2>
+            <p>To place an order fill up the form and press continue.</p>
+            <p><b> Everything</b> must be filled :) </p>
+        </div>
+        <form  name="ShoppingList" >
+            <p>
+                <label>Name</label>
+                <input id='name' name='name' type='text'>
+            </p><p>
+                <label>Email Address</label>
+                <input id='email' name='email' type='email'>
+            </p><p>
+                <label>Phone Number</label>
+                <input id='phone' name='phone' type='tel'>
+            </p><p>
+                <label>Address Line 1</label>
+                <input id='address1' name='address1' type='text'>
+            </p><p>
+                <label>Address Line 2</label>
+                <input id='address2' name='address2' type='text'>
+            </p><p>
+                <label>Postal Code</label>
+                <input id='postalcode' name='postalcode' type='number'>
+            </p><p>
+                <label>Size of photo</label>
+                <!--<input id='photosize' name='photosize' type='text'>-->
+                <input type="radio" name="photosize" value="4" checked> 4R
+                <input type="radio" name="photosize" value="5"> 5R
+                <input type="radio" name="photosize" value="6"> 6R<br>
+            </p><p>
+                <label>Quantity</label>
+                <input id='quantity' name='quantity' type='number' value="1">
+            </p><p>
+                <label>Message</label>
+                <textarea id='message' name='message' rows='5'></textarea>
+            </p>
+            <!--<button type='submit' >Send</button>-->
+            <input type="button" value="Continue"   onclick="SaveItem()" > 
+        </form>
+        <script src="Storage2.js"></script>
+        <!--<script src ="jjss.js"></script>-->
+        <!--<script src='google-sheet.js'></script>-->
+    </body>
+</html>

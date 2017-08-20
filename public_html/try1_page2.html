@@ -1,12 +1,16 @@
 <!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
 <html>
     <head>
-        <title>cropit</title>
+        <title>crop your image</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="jjss.js"></script>
-        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
-        <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>-->
         <script src="jquery.cropit.js"></script>
-
         <style>
             .cropit-preview {
                 background-color: #f8f8f8;
@@ -42,8 +46,11 @@
             }
         </style>
     </head>
-    <body>
-        <form ><!--        action="#">-->
+
+    <body onload="showSize()">
+        <h3 id="photosizee">Chosen photo size:</h3>
+        <h3> Upload your image and crop :)</h3>
+        <div ><!--        action="#">-->
             <div class="image-editor">
                 <input type="file" class="cropit-image-input">
                 <div class="cropit-preview"  ></div>
@@ -52,15 +59,19 @@
                 </div>
                 <input type="range" class="cropit-image-zoom-input">
                 <input type="hidden" name="image-data" class="hidden-image-data" />
-                <input type="text" name="haha"/>
-                <button type="submit">Submit</button>
+                <!--<input type="text" name="haha"/>-->
+
             </div>
-        
+
             <div>
                 <button class="rotate-ccw">Rotate counterclockwise</button>
                 <button class="rotate-cw">Rotate clockwise</button>
             </div>
-        </form>
+            <div>
+                <!--<button type="submit">Submit</button>-->
+                <input type="button" value="Continue (2/3)"   class="export" > 
+            </div>
+        </div>
 
         <div id="result">
             <code>$form.serialize() =</code>
@@ -68,22 +79,29 @@
         </div>
 
         <script>
+            
             $(function () {
                 $('.image-editor').cropit();
-
-                $('form').submit(function () {
-                    // Move cropped image data to hidden input
+                $('.export').click(function () {
                     var imageData = $('.image-editor').cropit('export');
-                    $('.hidden-image-data').val("imageData");
-
-                    // Print HTTP request params
-                    var formValue = $(this).serialize();
-                    $('#result-data').text(formValue);
-
-                    // Prevent the form from actually submitting
-
-                    return false;
+                    //$('.hidden-image-data').val(imageData);
+                    $('#result-data').text("formValueethethet");
+                    //localStorage.setItem("key10", imageData);
                 });
+//                $('form').submit(function () {
+//                    // Move cropped image data to hidden input
+//                    var imageData = $('.image-editor').cropit('export');
+//                    $('.hidden-image-data').val(imageData);
+//                    //localStorage.setItem("key10", imageData);
+//                    // Print HTTP request params
+//                    var formValue = $(this).serialize();
+//                    $('#result-data').text(formValue);
+//
+//                    // Prevent the form from actually submitting
+//
+//                    return false;
+//                });
+
                 $('.rotate-cw').click(function () {
                     $('.image-editor').cropit('rotateCW');
                 });
@@ -93,6 +111,13 @@
             });
 
         </script>
+
+
+        <script>
+            function showSize() {
+                var text = document.getElementById("photosizee").innerHTML;
+                document.getElementById("photosizee").innerHTML = text + "<b>  " + localStorage.getItem("key7") + "R </b>";
+            }
+        </script>
     </body>
 </html>
-
