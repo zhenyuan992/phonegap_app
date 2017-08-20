@@ -1,137 +1,28 @@
 <!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
 <html class="ui-mobile-rendering">
-<head>
-    <style type="text/css">
-        .optdual { position: relative; }
-        .optdual .offset { position: absolute; left: 18em; }
-        .optlist label { width: 16em; display: block; }
-        #dl_links { margin-top: .5em; }
+    <head>
+        <style type="text/css">
+            .optdual { position: relative; }
+            .optdual .offset { position: absolute; left: 18em; }
+            .optlist label { width: 16em; display: block; }
+            #dl_links { margin-top: .5em; }
 
-    </style>
-    <title>etheth</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/jquery.mobile-1.0.1.min.css"/>
-    <!-- The Templates -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.Jcrop.js"></script>
-
-    <script type="text/template" id="home">
-
-        <div data-role="header">
-            <h1>Backbone.js + jQuery Mobile</h1>
-        </div>
-
-        <div data-role="content">
-            <h3>Application Template for using Backbone.js and jQuery Mobile.</h3>
-            <p>Backbone.js is used for code organization (Models, Views) and "routing".</p>
-            <p>jQuery Mobile is used for its mobile styles and widgets. The routing and navigation capabilities of jQuery Mobile are disbled to let Backbone.js handle these requirements.</p>
-            <p>This is the Home page. It was created dynamically using an underscore.js template.</p>
-            <p>Navigate to:</p>
-            <ul data-role="listview"  data-inset="true">
-                <li><a href="#page1">Page 1</a></li>
-                <li><a href="#page2">Page 2</a></li>
-                <li><a href="demo_crop/form.html">form- cropping sample</a></li>
-                <li><a href="demo_crop/form_1.html">form1- dropbox sample</a></li>
-                <li><a href="demo_crop/form_2.html">form2- google sheets sample</a></li>
-                <!--<li><a href="demos/tutorial5.html">to submit printing click here</a></li>-->
-            </ul>
-			
-        </div>
-
-    </script>
-
-    <script type="text/template" id="page1">
-
-        <div data-role="header">
-            <a href="#" data-icon="back" class="back ui-btn-left">Back</a>
-            <h1>Page 1</h1>
-        </div>
-
-        <div data-role="content">
-            <p>This is Page 1. It was created dynamically using an underscore.js template.</p>
-            <p>Navigate to:</p>
-            <ul data-role="listview" data-inset="true">
-                <li><a href="#">Home</a></li>
-                <li><a href="#page2">Page 2</a></li>
-            </ul>
-        </div>
-
-    </script>
-
-    <script type="text/template" id="page2">
-
-        <div data-role="header">
-            <a href="#" data-icon="back" class="back ui-btn-left">Back</a>
-            <h1>Page 2</h1>
-        </div>
-
-        <div data-role="content">
-            <p>This is Page 2. It was created dynamically using an underscore.js template.</p>
-            <p>Navigate to:</p>
-            <ul data-role="listview" data-inset="true">
-                <li><a href="#">Home</a></li>
-                <li><a href="#page1">Page 1</a></li>
-            </ul>
-        </div>
-
-    </script>
-    <script type="text/template" id="page3">
-
-        <div data-role="header">
-            <a href="demos/tutorial5.html" data-icon="back" class="back ui-btn-left">Back</a>
-            <h1>Upload your photos for printing</h1>
-        </div>
-
-        <div data-role="content">
-            <div class="container">
-            <div class="row">
-            <div class="span12">
-            <div class="jc-demo-box">
-                
-                <div>
-                    <p> wahaha here is where you crop</p>
-                    <img src="demos/demo_files/sago.jpg" id="target" alt="[Jcrop Example]" />
-                
-                    <form id="coords"
-                      class="coords"
-                      onsubmit="return false;"
-                      action="http://example.com/post.php">
-                      <div class="inline-labels">
-                      <label>X1 <input type="text" size="4" id="x1" name="x1" /></label>
-                      <label>Y1 <input type="text" size="4" id="y1" name="y1" /></label>
-                      <label>X2 <input type="text" size="4" id="x2" name="x2" /></label>
-                      <label>Y2 <input type="text" size="4" id="y2" name="y2" /></label>
-                      <label>W <input type="text" size="4" id="w" name="w" /></label>
-                      <label>H <input type="text" size="4" id="h" name="h" /></label>
-                      </div>
-                    </form>
-                </div>
-                <div>
-                    <p> here is where you submit the whole thing</p>
-                    <button class="btn" onclick="alert('submited')">
-                    Submit
-                    </button>
-                </div>
-            </div>
-            </div>
-            </div>
-            </div>
-        </div>
-
-    </script>
-    <!-- The Scripts -->
-    <script src="lib/jquery-1.7.1.min.js"></script>
-    <script src="js/jqm-config.js"></script>
-    <script src="lib/jquery.mobile-1.0.1.min.js"></script>
-    <script src="lib/underscore-min.js"></script>
-    <script src="lib/backbone-min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/forcrop.js"></script>
-    <!--from tut5-->
-
-
-</head>
-
-<body></body>
-
+        </style>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>TODO write content</div>
+        <ul>
+            <li><a href="demo_crop/form.html">form- cropping sample</a></li>
+            <li><a href="demo_crop/form_1.html">form1- dropbox sample</a></li>
+            <li><a href="demo_crop/form_2.html">form2- google sheets sample</a></li>
+        </ul>
+    </body>
 </html>
