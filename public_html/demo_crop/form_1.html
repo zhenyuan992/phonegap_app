@@ -12,7 +12,7 @@
       <nav>
         <a href="/">
           <h1>
-            <img src="https://cfl.dropboxstatic.com/static/images/brand/logotype_white-vflRG5Zd8.svg" class="logo" />
+            <!--<img src="https://cfl.dropboxstatic.com/static/images/brand/logotype_white-vflRG5Zd8.svg" class="logo" />-->
             JavaScript SDK Examples
           </h1>
         </a>
@@ -55,7 +55,7 @@
         .catch(function(error) {
           console.error(error);
           var results = document.getElementById('results');
-          results.appendChild(document.createTextNode("something failed:" +error));
+          results.appendChild(document.createTextNode("something failed:" +error.toString()));
         });
       return false;
     }
