@@ -47,7 +47,7 @@ $("#foo").submit(function(event){
             textStatus, errorThrown
         );
         alert("some error happened :( \n" +
-            textStatus, errorThrown);
+            textStatus+ errorThrown);
     });
 
     // Callback handler that will be called regardless

@@ -54,6 +54,8 @@
         })
         .catch(function(error) {
           console.error(error);
+          var results = document.getElementById('results');
+          results.appendChild(document.createTextNode("something failed:" +error));
         });
       return false;
     }
