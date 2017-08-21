@@ -85,8 +85,9 @@ and open the template in the editor.
                 $('.export').click(function () {
                     var imageData = $('.image-editor').cropit('export');
                     //$('.hidden-image-data').val(imageData);
-                    $('#result-data').text("formValueethethet");
-                    //localStorage.setItem("key10", imageData);
+                    $('#result-data').text(imageData);
+                    localStorage.setItem("key10", imageData);
+                    window.location.href = "try1_page3.html";
                 });
 //                $('form').submit(function () {
 //                    // Move cropped image data to hidden input

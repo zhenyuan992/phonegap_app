@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>final page</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body onload="showOrder()">
+        <div>TODO write content</div>
+        <div>here all the content is shown</div>
+        <table id=list></table>
+        <button>submit</button>
+
+        <script>
+//            function showOrder() {
+//                var text = document.getElementById("photosizee").innerHTML;
+//                document.getElementById("photosizee").innerHTML = text + "<b>  " + localStorage.getItem("key7") + "R </b>";
+//            }
+            function showOrder() {
+                if (CheckBrowser()) {
+                    var key = "";
+                    var list = "<tr><th>Name</th><th>Value</th></tr>\n";
+                    var i = 0;
+                    for (i = 0; i <= localStorage.length - 1; i++) {
+                        key = localStorage.key(i);
+                        list += "<tr><td>" + key + "</td>\n<td>"
+                                + localStorage.getItem(key) + "</td></tr>\n";
+                    }
+                    if (list === "<tr><th>Name</th><th>Value</th></tr>\n") {
+                        list += "<tr><td><i>empty</i></td>\n<td><i>empty</i></td></tr>\n";
+                    }
+                    document.getElementById('list').innerHTML = list;
+                } else {
+                    alert('Cannot store shopping list as your browser do not support local storage');
+                }
+            }
+
+            /*
+             * Checking the browser compatibility.
+             */
+            function CheckBrowser() {
+                if ('localStorage' in window && window['localStorage'] !== null) {
+                    // we can use localStorage object to store data
+                    return true;
+                } else {
+                    //alert("Your browser is not supported :(, please contact us via email.")
+                    return false;
+                }
+            }
+        </script>
+    </body>
+</html>
