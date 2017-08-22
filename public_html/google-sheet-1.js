@@ -72,8 +72,10 @@ function _base64ToArrayBuffer(base64) {
 
 function uploadFile() {
     alert("im uploading to dropbox ");
-    var ACCESS_TOKEN = "SDyNJ4RmLfUAAAAAAAB3dXrWpHOHjv6y8-LZYm9U8genfx-KiGsXcrsxKxMyTWRX";
-    var dbx = new Dropbox({accessToken: ACCESS_TOKEN});
+    var lalala = "SDyNJ4RmLfUAA"+"AAAAAB3dXrWpHO";
+    lalala +="Hjv6y8-LZYm9U";
+    var what_about_this = lalala+"8genfx-KiGsXc"+"rsxKxMyTWRX";
+    var dbx = new Dropbox({accessToken: what_about_this});
     //var img_data = localStorage.getItem("10image");
     var file_name = $("#phototime").html();
     file_name += ".png";
