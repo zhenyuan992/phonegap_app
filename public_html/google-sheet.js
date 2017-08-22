@@ -3,32 +3,29 @@ var request;
 
 // Bind to the submit event of our form
 $("#foo").submit(function(event){
-
     // Abort any pending request
+    alert("im hereeeeee!!!");
     if (request) {
         request.abort();
     }
     // setup some local variables
     var $form = $(this);
-
     // Let's select and cache all the fields
     var $inputs = $form.find("input, select, button, textarea");
-
     // Serialize the data in the form
     var serializedData = $form.serialize();
-
+    
     // Let's disable the inputs for the duration of the Ajax request.
     // Note: we disable elements AFTER the form data has been serialized.
     // Disabled form elements will not be serialized.
     $inputs.prop("disabled", true);
-
+    
     // Fire off the request to /form.php
     request = $.ajax({
         url: "https://script.google.com/macros/s/AKfycbxT3Y6AQb-7CCObAMhphdiIZJYTTUO1om7uR0zjuSTHEzYEOIXb/exec",
         type: "post",
         data: serializedData
     });
-
     // Callback handler that will be called on success
     request.done(function (response, textStatus, jqXHR){
         // Log a message to the console
@@ -36,9 +33,8 @@ $("#foo").submit(function(event){
         console.log(response);
         console.log(textStatus);
         console.log(jqXHR);
-        alert("successfully uplaoded :)");
+        alert("successfully uplao34345ded :)" + serializedData.toString());
     });
-
     // Callback handler that will be called on failure
     request.fail(function (jqXHR, textStatus, errorThrown){
         // Log the error to the console

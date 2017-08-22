@@ -9,17 +9,17 @@ function SaveItem() {
     var size = document.forms.ShoppingList.photosize.value;
     var qty = document.forms.ShoppingList.quantity.value;
     var message = document.forms.ShoppingList.message.value;
-    localStorage.setItem("key1", name);
-    localStorage.setItem("key2", email);
-    localStorage.setItem("key3", phone);
-    localStorage.setItem("key4", addr1);
-    localStorage.setItem("key5", addr2);
-    localStorage.setItem("key6", postal);
-    localStorage.setItem("key7", size);
-    localStorage.setItem("key8", qty);
-    localStorage.setItem("key9", message);
+    localStorage.setItem("1name", name);
+    localStorage.setItem("2email", email);
+    localStorage.setItem("3phone", phone);
+    localStorage.setItem("4addr1", addr1);
+    localStorage.setItem("5addr2", addr2);
+    localStorage.setItem("6postal", postal);
+    localStorage.setItem("7size", size);
+    localStorage.setItem("8qty", qty);
+    localStorage.setItem("9message", message);
     //doShowAll();
-    alert("im here!");
+    //alert("im here!");
     window.location.href = "try1_page2.html";
 }
 function ClearAll() {
@@ -37,7 +37,7 @@ function doShowAll() {
             list += "<tr><td>" + key + "</td>\n<td>"
                     + localStorage.getItem(key) + "</td></tr>\n";
         }
-        if (list == "<tr><th>Name</th><th>Value</th></tr>\n") {
+        if (list === "<tr><th>Name</th><th>Value</th></tr>\n") {
             list += "<tr><td><i>empty</i></td>\n<td><i>empty</i></td></tr>\n";
         }
         document.getElementById('list').innerHTML = list;

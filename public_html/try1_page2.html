@@ -52,7 +52,7 @@ and open the template in the editor.
         <h3> Upload your image and crop :)</h3>
         <div ><!--        action="#">-->
             <div class="image-editor">
-                <input type="file" class="cropit-image-input">
+                <input type="file" class="cropit-image-input" accept="image/png, image/jpeg">
                 <div class="cropit-preview"  ></div>
                 <div class="image-size-label">
                     Resize image
@@ -86,7 +86,7 @@ and open the template in the editor.
                     var imageData = $('.image-editor').cropit('export');
                     //$('.hidden-image-data').val(imageData);
                     $('#result-data').text(imageData);
-                    localStorage.setItem("key10", imageData);
+                    localStorage.setItem("10image", imageData);
                     window.location.href = "try1_page3.html";
                 });
 //                $('form').submit(function () {
@@ -97,9 +97,7 @@ and open the template in the editor.
 //                    // Print HTTP request params
 //                    var formValue = $(this).serialize();
 //                    $('#result-data').text(formValue);
-//
 //                    // Prevent the form from actually submitting
-//
 //                    return false;
 //                });
 
@@ -117,7 +115,7 @@ and open the template in the editor.
         <script>
             function showSize() {
                 var text = document.getElementById("photosizee").innerHTML;
-                document.getElementById("photosizee").innerHTML = text + "<b>  " + localStorage.getItem("key7") + "R </b>";
+                document.getElementById("photosizee").innerHTML = text + "<b>  " + localStorage.getItem("7size") + "R </b>";
             }
         </script>
     </body>

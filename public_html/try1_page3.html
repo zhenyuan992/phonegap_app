@@ -9,13 +9,24 @@ and open the template in the editor.
         <title>final page</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            div.hidden {
+                display: none;
+            }
+        </style>
+        <script src="Dropbox-sdk.min.js"></script>
     </head>
     <body onload="showOrder()">
-        <div>TODO write content</div>
-        <div>here all the content is shown</div>
-        <table id=list></table>
-        <button>submit</button>
-
+        <div> <h5>Here is your order</h5>
+            <table id=list></table>
+        </div>
+        <div> <h5>Image</h5>
+            <img src="" id="pic_to_upload" alt=":)"/>
+        </div>
+        <div class="hidden"><form id="formtry"> </form></div>
+        <div>
+            <button>Add new order</button> <button id="fooo">Submit Order :)</button>
+        </div>
         <script>
 //            function showOrder() {
 //                var text = document.getElementById("photosizee").innerHTML;
@@ -23,26 +34,51 @@ and open the template in the editor.
 //            }
             function showOrder() {
                 if (CheckBrowser()) {
+                    if (!Date.now) {
+                        Date.now = function now() {
+                            return new Date().getTime();
+                        };
+                    }
+                    var photo_time = Date.now();
                     var key = "";
                     var list = "<tr><th>Name</th><th>Value</th></tr>\n";
                     var i = 0;
                     for (i = 0; i <= localStorage.length - 1; i++) {
                         key = localStorage.key(i);
-                        list += "<tr><td>" + key + "</td>\n<td>"
-                                + localStorage.getItem(key) + "</td></tr>\n";
+                        if (key !== "10image") {
+                            list += "<tr><td>" + key + "</td>\n<td>"
+                                    + localStorage.getItem(key) + "</td></tr>\n";
+                        }
                     }
                     if (list === "<tr><th>Name</th><th>Value</th></tr>\n") {
                         list += "<tr><td><i>empty</i></td>\n<td><i>empty</i></td></tr>\n";
                     }
                     document.getElementById('list').innerHTML = list;
+                    var img_data = localStorage.getItem("10image");
+                    document.getElementById("pic_to_upload").src = img_data;
+                    //loading data into formtry
+                    var html_input_text = "";
+                    html_input_text += "<input id='name' name='name' type='text' value='" + localStorage.getItem("1name") + "'>";
+                    html_input_text += "<input id='email' name='email' type='email' value='" + localStorage.getItem("2email") + "'>";
+                    html_input_text += "<input id='phone' name='phone' type='tel' value='" + localStorage.getItem("3phone") + "'>";
+                    html_input_text += "<input id='address1' name='address1' type='text' value='" + localStorage.getItem("4addr1") + "'>";
+                    html_input_text += "<input id='address2' name='address2' type='text' value='" + localStorage.getItem("5addr2") + "'>";
+                    html_input_text += "<input id='postalcode' name='postalcode' type='number' value='" + localStorage.getItem("6postal") + "'>";
+                    html_input_text += "<input type='radio' name='photosize' value='" + localStorage.getItem("7size") + "' checked>";
+                    html_input_text += "<input id='quantity' name='quantity' type='number' value='" + localStorage.getItem("8qty") + "'>";
+                    html_input_text += "<textarea id='message' name='message' rows='5'>" + localStorage.getItem("9message") + "</textarea>";
+                    photo_time += "Q"+localStorage.getItem("8qty")+"R"+localStorage.getItem("7size");
+                    html_input_text += "<input id='photoid' name='photoid' type='text' value='" + photo_time + "'>";
+                    html_input_text += "<div id='phototime'>" + photo_time + " </div>";
+                    document.getElementById("formtry").innerHTML = html_input_text;
                 } else {
                     alert('Cannot store shopping list as your browser do not support local storage');
                 }
             }
-
-            /*
-             * Checking the browser compatibility.
-             */
+//            function submit_google(){
+//                
+//            }
+            /*Checking the browser compatibility.*/
             function CheckBrowser() {
                 if ('localStorage' in window && window['localStorage'] !== null) {
                     // we can use localStorage object to store data
@@ -53,5 +89,9 @@ and open the template in the editor.
                 }
             }
         </script>
+        <script src="jjss.js"></script>
+        <script src='google-sheet-1.js'></script>
+
+        <p>loaded</p>
     </body>
 </html>
