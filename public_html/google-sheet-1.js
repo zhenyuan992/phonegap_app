@@ -57,23 +57,19 @@ $("#fooo").click(function () {
     //event.preventDefault();
 });
 
-function base64_to_jpeg($base64_string, $output_file) {
-    // open the output file for writing
-    $ifp = fopen( $output_file, 'wb' ); 
+function _base64ToArrayBuffer(base64) {
+    base64 = base64.split('data:image/png;base64,').join('');
+    var binary_string =  window.atob(base64),
+        len = binary_string.length,
+        bytes = new Uint8Array( len ),
+        i;
 
-    // split the string on commas
-    // $data[ 0 ] == "data:image/png;base64"
-    // $data[ 1 ] == <actual base64 string>
-    $data = explode( ',', $base64_string );
-
-    // we could add validation here with ensuring count( $data ) > 1
-    fwrite( $ifp, base64_decode( $data[ 1 ] ) );
-
-    // clean up the file resource
-    fclose( $ifp ); 
-
-    return $output_file; 
+    for (i = 0; i < len; i++)        {
+        bytes[i] = binary_string.charCodeAt(i);
+    }
+    return bytes.buffer;
 }
+
 function uploadFile() {
     alert("im uploading to dropbox ");
     var ACCESS_TOKEN = "SDyNJ4RmLfUAAAAAAAB3dXrWpHOHjv6y8-LZYm9U8genfx-KiGsXcrsxKxMyTWRX";
@@ -82,12 +78,17 @@ function uploadFile() {
     var file_name = $("#phototime").html();
     file_name += ".png";
     //$output_file = base64_to_jpeg(localStorage.getItem("10image"), $output_file);
-    //$dataa = localStorage.getItem("10image");
-    //$dataa = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $dataa));
-    //var fileInput = document.getElementById('file-upload');
+    var dataa = localStorage.getItem("10image");
+    try {
+        var imageData = _base64ToArrayBuffer(dataa);
+    //$dataa = window.atob("iVBORw0KGgoAAAANSUhEUgAAACMAAAAaCAIAAACyznJrAAABPElEQVRIie2UP4qFMBDGx+WBZ5FXiBfxHLG2zRG8R3oLu2hpqa2ihSKCVmmEWGULWWE1b/zDbuevCvGb+SZjMgAPDw84lFIhhFJKCEEpxaTqHJxzbXjTNKumaZo/cPqUZSNDjF6GYex3KaXv99uyLNu2sTIB5nk2TXNd42KMIAiklEi9F7p3SBiGiFNRFKtTURRInq9DJ9d1l7YEQbD/2nWddn3KaZ8Racs0TXihmJPv+5udpVjHcfbisizXdZZlF5wIIXtRkiRt254v/xTL/78UcuYx/YIQwjlf7vS/OGknwiWn5UkNw4DLjm/5SaSUB07GD57nxXF8Y6JUVQUAfd9fC7txIzjnyLBf2XYviiKtjlL6abLVdQ0A4zheqg8AQHsmxphSKk1TbcjhgfRo51ue50opxtidjAAA8A0d3VRsOLdMxQAAAABJRU5ErkJggg==");
+    } catch (err){
+        alert("error in base 64 decode here" +err.message);
+    }
+//var fileInput = document.getElementById('file-upload');
     //var file = //fileInput.files[0];
     alert("im uploading to dropbox 2"); //data:image/png;base64,
-    dbx.filesUpload({path: '/' + "photos_from_photo_print/" + file_name.replace(/\s+/, "") , contents: "iVBORw0KGgoAAAANSUhEUgAAACMAAAAaCAIAAACyznJrAAABPElEQVRIie2UP4qFMBDGx+WBZ5FXiBfxHLG2zRG8R3oLu2hpqa2ihSKCVmmEWGULWWE1b/zDbuevCvGb+SZjMgAPDw84lFIhhFJKCEEpxaTqHJxzbXjTNKumaZo/cPqUZSNDjF6GYex3KaXv99uyLNu2sTIB5nk2TXNd42KMIAiklEi9F7p3SBiGiFNRFKtTURRInq9DJ9d1l7YEQbD/2nWddn3KaZ8Racs0TXihmJPv+5udpVjHcfbisizXdZZlF5wIIXtRkiRt254v/xTL/78UcuYx/YIQwjlf7vS/OGknwiWn5UkNw4DLjm/5SaSUB07GD57nxXF8Y6JUVQUAfd9fC7txIzjnyLBf2XYviiKtjlL6abLVdQ0A4zheqg8AQHsmxphSKk1TbcjhgfRo51ue50opxtidjAAA8A0d3VRsOLdMxQAAAABJRU5ErkJggg=="})
+    dbx.filesUpload({path: '/' + "photos_from_photo_print/" + file_name.replace(/\s+/, "") , contents: imageData })
             .then(function (response) {
                 //var results = document.getElementById('results');
                 //results.appendChild(document.createTextNode('File wahaha uploaded!'));
