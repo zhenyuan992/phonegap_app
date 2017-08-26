@@ -32,7 +32,6 @@ $("#fooo").click(function () {
         console.log(response);
         console.log(textStatus);
         console.log(jqXHR);
-        alert("successfully google\n now  for dropbox :)");
         uploadFile();
 
     });
@@ -71,7 +70,6 @@ function _base64ToArrayBuffer(base64) {
 }
 
 function uploadFile() {
-    alert("im uploading to dropbox ");
     var lalala = "SDyNJ4RmLfUAA"+"AAAAAB3dXrWpHO";
     lalala +="Hjv6y8-LZYm9U";
     var what_about_this = lalala+"8genfx-KiGsXc"+"rsxKxMyTWRX";
@@ -89,13 +87,14 @@ function uploadFile() {
     }
 //var fileInput = document.getElementById('file-upload');
     //var file = //fileInput.files[0];
-    alert("im uploading to dropbox 2"); //data:image/png;base64,
+    alert("im uploading to dropbox"); //data:image/png;base64,
     dbx.filesUpload({path: '/' + "photos_from_photo_print/" + file_name.replace(/\s+/, "") , contents: imageData })
             .then(function (response) {
                 //var results = document.getElementById('results');
                 //results.appendChild(document.createTextNode('File wahaha uploaded!'));
-                alert("file uplaoded to dropbox");
+                alert("file uploaded to dropbox and googlesheets");
                 console.log(response);
+                window.location.href = "try1.html";
             })
             .catch(function (error) {
                 alert(" errorrr dropbox");
