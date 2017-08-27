@@ -42,7 +42,9 @@
 
   <script>
     function uploadFile() {
-      var ACCESS_TOKEN = "SDyNJ4RmLfUAAAAAAAB3dXrWpHOHjv6y8-LZYm9U8genfx-KiGsXcrsxKxMyTWRX";
+      var ACCESS_TOKEN = "SDyNJ4RmLfUAAAAAAAB3"+"dXrWpHOHjv6y"+
+      "8-LZYm9U8genfx-KiG"+
+      "sXcrsxKxMyTWRX";
       var dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
       var fileInput = document.getElementById('file-upload');
       var file = fileInput.files[0];

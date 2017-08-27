@@ -50,9 +50,30 @@ and open the template in the editor.
                 <textarea id='message' name='message' rows='5'></textarea>
             </p>
             <!--<button type='submit' >Send</button>-->
-            <input type="button" value="Continue"   onclick="SaveItem()" > 
+            <input type="button" value="Continue(1/3)"   onclick="SaveItem()" >
+            <button onclick="checkConnection()" >check connection</button>
         </form>
+
         <script src="Storage2.js"></script>
+        <script>
+                function checkConnection() {
+                    var networkState = navigator.connection.type;
+
+                    var states = {};
+                    states[Connection.UNKNOWN] = 'Unknown connection';
+                    states[Connection.ETHERNET] = 'Ethernet connection';
+                    states[Connection.WIFI] = 'WiFi connection';
+                    states[Connection.CELL_2G] = 'Cell 2G connection';
+                    states[Connection.CELL_3G] = 'Cell 3G connection';
+                    states[Connection.CELL_4G] = 'Cell 4G connection';
+                    states[Connection.CELL] = 'Cell generic connection';
+                    states[Connection.NONE] = 'No network connection';
+
+                    alert('Connection type: ' + states[networkState]);
+                }
+
+
+        </script>
         <!--<script src ="jjss.js"></script>-->
         <!--<script src='google-sheet.js'></script>-->
     </body>

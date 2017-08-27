@@ -13,6 +13,7 @@ and open the template in the editor.
             div.hidden {
                 display: none;
             }
+            div.hehe {text-align:center;}
         </style>
         <script src="Dropbox-sdk.min.js"></script>
     </head>
@@ -20,13 +21,15 @@ and open the template in the editor.
         <div> <h5>Here is your order</h5>
             <table id=list></table>
         </div>
-        <div> <h5>Image</h5>
-            <img src="" id="pic_to_upload" alt=":)"/>
+        <div>
+            <button id="fooo">@ @ Submit Order :) @ @</button> <br>
+            <button>Add new order</button> <button onclick="location.href = 'index.html';">Cancel</button> 
+        </div>
+        <div> <h5>Image (Actual quality)</h5>
+            <img src="" id="pic_to_upload" alt="NO IMAGE!!"/>
         </div>
         <div class="hidden"><form id="formtry"> </form></div>
-        <div>
-            <button>Add new order</button> <button id="fooo">Submit Order :)</button>
-        </div>
+        
         <script>
 //            function showOrder() {
 //                var text = document.getElementById("photosizee").innerHTML;

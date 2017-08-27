@@ -18,8 +18,8 @@ and open the template in the editor.
                 border: 1px solid #ccc;
                 border-radius: 3px;
                 margin-top: 7px;
-                width:700px;
-                height: 700px;
+                width:250px;
+                height: 187px;
             }
             .cropit-preview-image-container {
                 cursor: move;
@@ -52,17 +52,16 @@ and open the template in the editor.
         <h3> Upload your image and crop :)</h3>
         <div ><!--        action="#">-->
             <div class="image-editor">
-                <input type="file" class="cropit-image-input" accept="image/png, image/jpeg">
+                <input type="file" class="cropit-image-input" accept="image/png, image/jpeg" id="real-pic">
+                <div id="preview2">No image chosen.</div>
                 <div class="cropit-preview"  ></div>
                 <div class="image-size-label">
                     Resize image
                 </div>
-                <input type="range" class="cropit-image-zoom-input">
+                <input type="range" class="cropit-image-zoom-input" >
                 <input type="hidden" name="image-data" class="hidden-image-data" />
                 <!--<input type="text" name="haha"/>-->
-
             </div>
-
             <div>
                 <button class="rotate-ccw">Rotate counterclockwise</button>
                 <button class="rotate-cw">Rotate clockwise</button>
@@ -74,18 +73,110 @@ and open the template in the editor.
         </div>
 
         <div id="result">
-            <code>$form.serialize() =</code>
-            <code id="result-data"></code>
         </div>
 
+
         <script>
-            
+            window.URL = window.URL || window.webkitURL;
+            var elBrowse = document.getElementById("real-pic"),
+                    elPreview = document.getElementById("preview2"),
+                    useBlob = false && window.URL;
+            function readImage(file) {
+                // Create a new FileReader instance
+                // https://developer.mozilla.org/en/docs/Web/API/FileReader
+                var reader = new FileReader();
+                // Once a file is successfully readed:
+                reader.addEventListener("load", function () {
+
+                    // At this point `reader.result` contains already the Base64 Data-URL
+                    // and we've could immediately show an image using
+                    // `elPreview.insertAdjacentHTML("beforeend", "<img src='"+ reader.result +"'>");`
+                    // But we want to get that image's width and height px values!
+                    // Since the File Object does not hold the size of an image
+                    // we need to create a new image and assign it's src, so when
+                    // the image is loaded we can calculate it's width and height:
+                    var image = new Image();
+                    image.addEventListener("load", function () {
+                        // Concatenate our HTML image info 
+                        var selected_size = localStorage.getItem("7size");
+                        var wrong_size = "";
+                        // 3R is 1050 x 1500 4R is 1200 x 1800 5R is 1500 2100 6r 1800 2400
+                        if (selected_size === "4") {
+                            if (image.width < 800) {
+                                wrong_size = "<tr><th>WARNING:</th><th> Image should be 1050x1500 to have good quality</th></tr>";
+                            }
+                        } else if (selected_size === "5") {
+                            if (image.width < 1800) {
+                                wrong_size = "<tr><th>WARNING:</th><th> Image should be 1200x1800 to have good quality</th></tr>";
+                            }
+                        } else if (selected_size === "6") {
+                            if (image.width < 2100) {
+                                wrong_size = "<tr><th>WARNING:</th><th> Image should be 1500x2100 to have good quality</th></tr>";
+                            }
+                        }
+                        var imageInfo =
+                                "<table><tr><th>File name</th><th>" + file.name + "</th></tr>" +
+                                "<tr><th>Image dimension</th><th>" + image.width + "×" + image.height + "</th></tr>" +
+                                "<tr><th>Image size</th><th>" + Math.round(file.size / 1024) + "KB" + "</th></tr>" +
+                                wrong_size +
+                                "</table>";
+                        // Finally append our created image and the HTML info string to our `#preview` 
+                        //elPreview.appendChild(this);
+                        elPreview.innerHTML = imageInfo;
+                        // If we set the variable `useBlob` to true:
+                        // (Data-URLs can end up being really large
+                        // `src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAA...........etc`
+                        // Blobs are usually faster and the image src will hold a shorter blob name
+                        // src="blob:http%3A//example.com/2a303acf-c34c-4d0a-85d4-2136eef7d723"
+                        if (useBlob) {
+                            // Free some memory for optimal performance
+                            window.URL.revokeObjectURL(image.src);
+                        }
+                    });
+                    image.src = useBlob ? window.URL.createObjectURL(file) : reader.result;
+                });
+                // https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL
+                reader.readAsDataURL(file);
+            }
+            elBrowse.addEventListener("change", function () {
+
+                var files = this.files;
+                // Let's create an empty `errors` String to collect eventual errors into:
+                var errors = "";
+                if (!files) {
+                    errors += "File upload not supported by your browser.";
+                }
+                if (files && files[0]) {
+                    // Iterate over every File object in the FileList array
+                    var i = files.length - 1;
+                    // Let's refer to the current File as a `file` variable
+                    // https://developer.mozilla.org/en-US/docs/Web/API/File
+                    var file = files[i];
+                    // Test the `file.name` for a valid image extension:
+                    // (pipe `|` delimit more image extensions)
+                    // The regex can also be expressed like: /\.(png|jpe?g|gif)$/i
+                    if ((/\.(png|jpeg|jpg|gif)$/i).test(file.name)) {
+                        // SUCCESS! It's an image!
+                        // Send our image `file` to our `readImage` function!
+                        readImage(file);
+                    } else {
+                        errors += file.name + " Unsupported Image extension\n";
+                    }
+                }
+                if (errors) {
+                    alert("error in loading image:" + errors);
+                }
+            });
             $(function () {
                 $('.image-editor').cropit();
                 $('.export').click(function () {
-                    var imageData = $('.image-editor').cropit('export');
+                    var imageData = $('.image-editor').cropit('export', {
+                        originalSize: true,
+                        quality: 1
+                    }
+                    );
                     //$('.hidden-image-data').val(imageData);
-                    $('#result-data').text(imageData);
+                    //$('#result-data').text(imageData);
                     localStorage.setItem("10image", imageData);
                     window.location.href = "try1_page3.html";
                 });
@@ -96,7 +187,6 @@ and open the template in the editor.
                     $('.image-editor').cropit('rotateCCW');
                 });
             });
-
         </script>
 
 
