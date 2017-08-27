@@ -94,7 +94,7 @@ function uploadFile() {
                 //results.appendChild(document.createTextNode('File wahaha uploaded!'));
                 alert("file uploaded to dropbox and googlesheets");
                 console.log(response);
-                window.location.href = "try1.html";
+                window.location.href = "index.html";
             })
             .catch(function (error) {
                 alert(" errorrr dropbox");
@@ -102,5 +102,7 @@ function uploadFile() {
                 //var results = document.getElementById('results');
                 //results.appendChild(document.createTextNode("something failed:" + error.toString()));
             });
+    //alert("im here!!");
+    //window.location.href = "try1.html";
     return false;
 }

@@ -52,7 +52,7 @@
     <!-- <plugin name="cordova-plugin-contacts" /> -->
     <plugin name="cordova-plugin-device" />
     <plugin name="cordova-plugin-device-motion" />
-    <!--<plugin name="cordova-plugin-device-orientation" />-->
+    <plugin name="cordova-plugin-device-orientation" />
     <plugin name="cordova-plugin-dialogs" />
     <plugin name="cordova-plugin-file" />
     <plugin name="cordova-plugin-file-transfer" />
