@@ -94,7 +94,7 @@ function uploadFile() {
                 //results.appendChild(document.createTextNode('File wahaha uploaded!'));
                 alert("file uploaded to dropbox and googlesheets");
                 console.log(response);
-                window.location.href = "index.html";
+                window.location.href = "../index.html";
             })
             .catch(function (error) {
                 alert(" errorrr dropbox");

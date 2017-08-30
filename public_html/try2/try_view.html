@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+<body>
+  ...
+  <!-- Views -->
+  <div class="views">
+    <!-- Left view -->
+    <div class="view view-main left-view">
+      <!-- Pages -->
+        
+        <!-- These links will load pages to this Left view -->
+        <a href="about.html"> About </a>
+        <a href="services.html"> Services </a>
+        
+        <!-- This link will load pages to Right view -->
+        <a href="products.html" data-view=".right-view"> Products </a>
+    </div>
+    <!-- Right view -->
+    <div class="view right-view">
+      <!-- Pages -->
+        
+        <!-- These links will load pages to this Right view -->
+        <a href="products.html"> Products </a>
+        <a href="contacts.html"> Contacts </a>
+        
+        <!-- This link will load pages to Left view -->
+        <a href="about.html" data-view=".left-view"> About </a>
+        <a href="services.html" data-view=".left-view"> Services </a>
+        
+        <!-- This link will trigger Go Back in Left view -->
+        <a href="#" class="back" data-view=".left-view"> About </a>
+    </div>          
+  </div>
+</body>
+</html>
