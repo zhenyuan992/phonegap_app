@@ -15,11 +15,11 @@
 </div>
 <div class="pages">
     <!-- Page, data-page contains page name-->
-    <div data-page="form" class="page">
+    <div data-page="form_personal_details" class="page">
         <!-- Scrollable page content-->
         <div class="page-content">
             <div class="content-block-title">Personal details</div>
-            <form id="my-form" class="list-block store-data">
+            <form id="my-form-pd" class="list-block store-data">
                 <ul>
                     <li>
                         <div class="item-content">
@@ -54,14 +54,9 @@
                     <li>
                         <div class="item-content">
                             <div class="item-inner">
-                                <div class="item-title label">Image Size</div>
+                                <div class="item-title label">Address line 1</div>
                                 <div class="item-input">
-                                    <select id="photosize" name="photosize">
-                                        <option>3R</option>
-                                        <option>4R</option>
-                                        <option>5R</option>
-                                        <option>6R</option>
-                                    </select>
+                                    <input type="text" id="addr1" name="addr1" placeholder="Address line 1"/>
                                 </div>
                             </div>
                         </div>
@@ -69,25 +64,24 @@
                     <li>
                         <div class="item-content">
                             <div class="item-inner">
-                                <div class="item-title label">Number of pictures</div>
+                                <div class="item-title label">Address line 2</div>
                                 <div class="item-input">
-                                    <input type="number" id="quantity" name="quantity" placeholder="1"/>
+                                    <input type="text" id="addr2" name="addr2" placeholder="Address line 2"/>
                                 </div>
                             </div>
                         </div>
                     </li>
-                    <li class="align-top">
+                    <li>
                         <div class="item-content">
                             <div class="item-inner">
-                                <div class="item-title label">Message</div>
-                                <div class="item-input" >
-                                    <textarea id="message" name="message" ></textarea>
+                                <div class="item-title label">Postal Code</div>
+                                <div class="item-input">
+                                    <input type="number" id="postal" name="postal" />
                                 </div>
                             </div>
                         </div>
                     </li>
                 </ul>
-
             </form>
             <div class="content-block">
                 <div class="row">
@@ -95,7 +89,7 @@
                         <a href="#" class="button button-big button-fill color-red">Cancel</a>
                     </div>
                     <div class="col-50">
-                        <a href="#" class="button get-storage-data button-big button-fill color-green">Continue</a>
+                        <a href="#" class="button get-storage-data button-big button-fill color-green">Continue to order</a>
                     </div>
                 </div>
             </div>
@@ -104,17 +98,3 @@
     </div>
 </div>
 
-
-
-<!--                    <li>
-                        <div class="item-content">
-                            <div class="item-inner">
-                                <div class="item-title label">Slider</div>
-                                <div class="item-input" >
-                                    <div class="range-slider">
-                                        <input type="range" name="zoom" min="0" max="100" value="50" step="0.1"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>-->

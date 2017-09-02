@@ -1,0 +1,55 @@
+<!-- We don't need full layout here, because this page will be parsed with Ajax-->
+<!-- Top Navbar-->
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="left">
+            <a href="#" class="back link"> 
+                <i class="icon icon-back"></i><span>Back</span>
+            </a>
+        </div>
+        <div class="center sliding">Order details</div>
+        <div class="right">
+            <!-- Right link contains only icon - additional "icon-only" class--><a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+        </div>
+    </div>
+</div>
+<div class="pages">
+    <!-- Page, data-page contains page name-->
+    <div data-page="form_order_pic" class="page">
+        <!-- Scrollable page content-->
+        <div class="page-content">
+            <!--order details-->
+            <div class="content-block-title">Order details</div>
+            <div class="content-block">
+                <div class="image-editor">
+                    <input type="file" class="cropit-image-input" accept="image/png, image/jpeg" id="real-pic">
+                    <div id="preview2">No image chosen.</div>
+                    <div class="cropit-preview"  ></div>
+                    <div class="image-size-label">
+                        Resize image
+                    </div>
+                    <input type="range" class="cropit-image-zoom-input" >
+                    <input type="hidden" name="image-data" class="hidden-image-data" />
+                    <!--<input type="text" name="haha"/>-->
+                </div>
+            </div>
+            <div class="content-block">
+                            <div class="row">
+                <a href="#" class="button rotate-ccw button-small button-fill color-green">Rotate counterclockwise</a>
+                <a href="#" class="button rotate-cw button-small button-fill color-green">Rotate clockwise</a>
+            </div>
+            </div>
+            <div class="content-block">
+                <div class="row">
+                    <div class="col-50">
+                        <a href="#" class="button button-big button-fill color-red">Cancel</a>
+                    </div>
+                    <div class="col-50">
+                        <a href="#" class="button get-order button-big button-fill color-green">Continue</a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>

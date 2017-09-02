@@ -1,0 +1,76 @@
+<!-- We don't need full layout here, because this page will be parsed with Ajax-->
+<!-- Top Navbar-->
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="left">
+            <a href="#" class="back link"> 
+                <i class="icon icon-back"></i><span>Back</span>
+            </a>
+        </div>
+        <div class="center sliding">Order details</div>
+        <div class="right">
+            <!-- Right link contains only icon - additional "icon-only" class--><a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+        </div>
+    </div>
+</div>
+<div class="pages">
+    <!-- Page, data-page contains page name-->
+    <div data-page="form_order" class="page">
+        <!-- Scrollable page content-->
+        <div class="page-content">
+            <!--order details-->
+            <div class="content-block-title">Order details</div>
+            <form id="my-form-order" class="list-block store-data">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Image Size</div>
+                                <div class="item-input">
+                                    <select id="photosize" name="photosize">
+                                        <option>3R</option>
+                                        <option>4R</option>
+                                        <option>5R</option>
+                                        <option>6R</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Number of pictures</div>
+                                <div class="item-input">
+                                    <input type="number" id="quantity" name="quantity" placeholder="1"/>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="align-top">
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Message</div>
+                                <div class="item-input" >
+                                    <textarea id="message" name="message" ></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+            </form>
+            <div class="content-block">
+                <div class="row">
+                    <div class="col-50">
+                        <a href="#" class="button button-big button-fill color-red">Cancel</a>
+                    </div>
+                    <div class="col-50">
+                        <a href="#" class="button get-order button-big button-fill color-green">Continue</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
