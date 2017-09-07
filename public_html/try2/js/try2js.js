@@ -3,52 +3,224 @@ var $$ = Dom7;
 var mainView = myApp.addView('.view-main', {dynamicNavbar: true});
 var storedPersonalData;
 var orderDetails;
+var orderList;
 var picData;
+// keys in localStorage:
+//"personalData" json of personal data,
+//"orderDetails" json of order details
+//"orderList" binary list of present orders.
+// "order0","pic0", "order1","pic1",.... "order1" contains "orderDetails"
 myApp.onPageInit('about', function (page) {
     $$('.create-page').on('click', function () {
         createContentPage();
     });
 });
 myApp.onPageInit('form_order', function (page) {
-    //alert("im in new page");
+    // try2_form_order.html // specify the photosize, quantity, message 
     $$('.get-order').on('click', function () {
-        orderDetails = myApp.formGetData('form_order');
+        orderDetails = myApp.formGetData('my-form-order');
+        alert(orderDetails.quantity);
         mainView.router.load({url: "try2_form_pic.html"});
     });
 });
+function list_order_template(orderN, size, qty, msg) {//given some inputs, return the proper list view html
+    var html_string = "<li>";
+    //html_string += "size" + size + qty + name;
+    html_string += '<div class="item-content">';
+    html_string += '<div class="item-media" ' + '>';
+    html_string += '<img src="images/no_image.png" width="44" id="media' + orderN + '"></div> ';
+    html_string += '<div class="item-inner"><div class="item-title-row">';
+    html_string += '<div class="item-title">Order Number: ' + orderN + ' </div>';
+    html_string += '<div class="item-after">' + qty + 'X</div>';
+    html_string += '</div>';
+    html_string += '<div class="item-subtitle" id="mediaaa">size=' + size + '</div>';
+    html_string += '<div class="item-text">message=' + msg + '</div></div></div>';
+    return html_string + "</li>";
+}
+
+function return_html_in_summary_list() {
+    var html_list = "<ul>";
+    var order_number = 1;
+    for (i = 0; i < orderList.length; i++) {
+        if (orderList[i] === 1) {
+            var orderD = localStorage.getItem("order" + i.toString());
+            //var img_data = localStorage.getItem("pic" + i.toString());
+            //document.getElementById("pic_to_upload").src = img_data;
+            var orderD1 = JSON.parse(orderD);
+            html_list += list_order_template(order_number, orderD1.photosize, orderD1.quantity, orderD1.message);
+            order_number += 1;
+        }
+    }
+    return html_list + "</ul>";
+}
+function add_images_to_sumlist() {
+    var order_number = 1;
+    for (i = 0; i < orderList.length; i++) {
+        if (orderList[i] === 1) {
+            //var orderD = localStorage.getItem("order" + i.toString());
+            var img_data = localStorage.getItem("pic" + i.toString());
+            //document.getElementById("pic_to_upload").src = img_data;
+            //$$("#mediaa").src("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAQGSURBVHhe7VpZyE1RFP4ze5F5lkwPPPAnYyQhyZgQ/c8SHiSSxKvIVMQTHsQbkcgYD0qmBx4MT+YyJPOUEN/3d462/e+91z73P/fcc8/du1b33Lu/vfZa31177eHsurpQAgOBgcBAYCARA/2BHhvJGHzmQWJ7aFvZSjdo3g35CvmTU/kGu/ZAuqfNwgoofJFTp01/xkvYujINEqZCybUqclwn4zpsn1YKEQPQ6HAVO64TcQS+DPQhoh1AGyEfC+R8TAZ92gRpbyNiASruF9BxPRro40KVhF74cqoGHNeJOA2fe5OImzXofEzGLRKQ1zk9K7uMBLwFMSb5YCDstwXL9l8M+B8OPOt0x6nDZg/71vG00YY3kdpEwQYo6ATpaJCu+O2k1ul8C5bt+0DuKvj3eK534IejjpjY0Ht47uvAz0OdSgJzGW002c7f1hsIa0KAtHDYrCj5FTmJD2thsokdeuQCRnUPFfxZAc8EThti/VsE/BQfAuYISnZoBAwR8OcV/BM8t3XgW6PusYK/KOgepBGwS8DP8iFgtqBku0bAYAF/TsHTOYkARkn8j14QdHN1p0bATgE/Mw0C1Ajg+JMIUCPgKfBtHEa2Qh2jJCZAigASoOYAKQK8CJB2Ucc0FicKrKurS26lXVtVbrnVmeOBoHuCZstxAb/cJwIaFweWwoys7xO4abIVJlR9qlrnwK81GDjdgT+k4T/hez8H/oYPAQy/fZCWmiJmXNvWeLWh0xH47ZmhQx5amBItcw/r9Ln6OX6rN+hfZcCyLbfAjUtcpbTA814L3roSvIMG3D0thTC58JDBtTq7jPo1kGWQAxZn1PYcShxuFH1Y6f18B+ZgpJt9XBJseRXZTNu5u73twIelcFZr7rz2E3aDPTA+tkE4hvP6L5Vq19UoHzEnxbI/yifMa0zs/8qMghFwRnXO53lRwQjY6uO0iikaAW/gHH0aChmmSQcTOUUjwJU3lgQCDAzUUgQsLjUCfqKhS0qdrrJul5gAbkjGQ7j/5imMSVg3CfLaMZtwXp4MGQUZXQahXm6RTwgzWmICpLM5NaKuODrn26csysi0CZCOplSn+C/bQjorAhgJrmGVOALSIoCJNovCWyuBAAcJIQJMYehaB4QhkGDgupJgyAEJiGwONCTBMAuEaTCf64D/Lic1Z5ALbbnPyOVCaG4ZnVZV86JFLgk4CsP4frEzpEsZhHp7QninOZcE0Ci+IX4H4VWYtIV6PwvO04aKLYWzPviw9RcIqNReIESAx/jMgiTjEOBZua1zvjf0LaZbGFk4laSPBpMzvKFhU8ILiL6lGl6yGtcjvKHFszSe/o5ThN85t/oW3g7Vdaj6KvlMu7hK5H3EUAIDgYHAQGDgLwGuWgcmXK2vAAAAAElFTkSuQmCC");
+            //var orderD1 = JSON.parse(orderD);
+            $$('#media' + order_number).attr('src', img_data);
+            //html_list += list_order_template(order_number, orderD1.photosize, orderD1.quantity, orderD1.message);
+            order_number += 1;
+        }
+    }
+}
+myApp.onPageInit('form_sum', function (page) {
+    // alter the list view to display thumbnail of orders
+    var html_list = return_html_in_summary_list();
+    $$("#all-orders").html(html_list);
+    add_images_to_sumlist();
+    $$('.add-order').on('click', function () {
+        //alert(orderDetails.quantity);
+        alert("im going to add new order");
+        mainView.router.load({
+            url: "try2_form_order.html"
+        });
+    });
+    $$('.cancel-orders').on('click', function () {
+        //alert(orderDetails.quantity);
+        mainView.router.back({
+            url: "try2.html",
+            force: true
+        });
+    });
+    $$('.submit-order').on('click', function () {
+        //orderDetails = myApp.formGetData('my-form-order');
+        //alert(orderDetails.quantity);
+        alert("im submitting all orders, going back home page");
+        mainView.router.back({
+            url: "try2.html",
+            force: true
+        });
+    });
+});
+
 myApp.onPageInit('form_order_pic', function (page) {
-    
-    //$(function () {
-        $('.image-editor').cropit();
-        $('.export').click(function () {
+//try2_form_pic.html must have json orderDetails inside
+    var file_sizeee;
+    $('.image-editor').cropit();
+    $$('.get-order').on('click', function () {
+        if (file_sizeee > 1) {
             var imageData = $('.image-editor').cropit('export', {
                 originalSize: true,
                 quality: 1
+            });
+            var current_count;
+            if (orderList) {
+                current_count = orderList.length;
+                orderList.push(1);
+            } else {
+                current_count = 0;
+                orderList = [1];
             }
-            );
-            //$('.hidden-image-data').val(imageData);
-            //$('#result-data').text(imageData);
-            localStorage.setItem("10image", imageData);
-            window.location.href = "try1_page3.html";
-        });
-        $('.rotate-cw').click(function () {
-            $('.image-editor').cropit('rotateCW');
-        });
-        $('.rotate-ccw').click(function () {
-            $('.image-editor').cropit('rotateCCW');
-        });
-    //});
-    alert("im in new page");
-    $$('.get-order').on('click', function () {
-        orderDetails = myApp.formGetData('form_order');
-        mainView.router.load({url: "try2_form_pic.html"});
+            localStorage.setItem("pic" + current_count.toString(), imageData);
+            localStorage.setItem("order" + current_count.toString(), JSON.stringify(orderDetails));
+            alert("im about to go to summary");
+            mainView.router.load({url: "try2_form_summary.html"});
+        } else {
+            alert("please choose a photo before submission.");
+        }
     });
+
+    $('.rotate-cw').click(function () {
+        $('.image-editor').cropit('rotateCW');
+    });
+    $('.rotate-ccw').click(function () {
+        $('.image-editor').cropit('rotateCCW');
+    });
+    window.URL = window.URL || window.webkitURL;
+    var elBrowse = document.getElementById("real-pic"),
+            elPreview = document.getElementById("preview2"),
+            useBlob = false && window.URL;
+    function readImage(file) {
+        var reader = new FileReader();
+        // Once a file is successfully readed:
+        reader.addEventListener("load", function () {
+            var image = new Image();
+            image.addEventListener("load", function () {
+                // Concatenate our HTML image info 
+                var selected_size = "4";//localStorage.getItem("7size");
+                selected_size = orderDetails.photosize;
+                file_sizeee = image.width;
+                var wrong_size = "";
+                // 3R is 1050 x 1500 4R is 1200 x 1800 5R is 1500 2100 6r 1800 2400
+                if (selected_size === "4R") {
+                    if (image.width < 800) {
+                        wrong_size = "<tr><th>WARNING!!</th><th> Image should be 1050x1500 to have good quality</th></tr>";
+                    }
+                } else if (selected_size === "5R") {
+                    if (image.width < 1800) {
+                        wrong_size = "<tr><th>WARNING!!</th><th> Image should be 1200x1800 to have good quality</th></tr>";
+                    }
+                } else if (selected_size === "3R") {
+                    if (image.width < 800) {
+                        wrong_size = "<tr><th>WARNING!!</th><th> Image should be 400x600 to have good quality</th></tr>";
+                    }
+                } else if (selected_size === "6R") {
+                    if (image.width < 2100) {
+                        wrong_size = "<tr><th>WARNING!!</th><th> Image should be 1500x2100 to have good quality</th></tr>";
+                    }
+                }
+
+                //"<div class='data-table'><table><thead><tr><th class='label-cell'>File</th>"
+                // + "</tr></thead>"+
+                //"<tbody><tr><td class='label-cell'>"+ file.name+"</td></tr></tbody>"+
+                var imageInfo = "<div class='content-block'> <table>" +
+                        "<tr><th>File Name</th><th>" + file.name + "</th></tr>" +
+                        "<tr><th>Image dimension</th><th>" + image.width + "×" + image.height + "</th></tr>" +
+                        "<tr><th>Image size</th><th>" + Math.round(file.size / 1024) + "KB" + "</th></tr>" +
+                        wrong_size +
+                        "</table></div>";
+                // Finally append our created image and the HTML info string to our `#preview` 
+                elPreview.innerHTML = imageInfo;
+                if (useBlob) {
+                    // Free some memory for optimal performance
+                    window.URL.revokeObjectURL(image.src);
+                }
+            });
+            image.src = useBlob ? window.URL.createObjectURL(file) : reader.result;
+        });
+        // https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL
+        reader.readAsDataURL(file);
+    }
+    elBrowse.addEventListener("change", function () {
+        var files = this.files;
+        // Let's create an empty `errors` String to collect eventual errors into:
+        var errors = "";
+        if (!files) {
+            errors += "File upload not supported by your browser.";
+        }
+        if (files && files[0]) {
+            // Iterate over every File object in the FileList array
+            var i = files.length - 1;
+            // Let's refer to the current File as a `file` variable
+            // https://developer.mozilla.org/en-US/docs/Web/API/File
+            var file = files[i];
+            // Test the `file.name` for a valid image extension:
+            // (pipe `|` delimit more image extensions)
+            // The regex can also be expressed like: /\.(png|jpe?g|gif)$/i
+            if ((/\.(png|jpeg|jpg|gif)$/i).test(file.name)) {
+                // SUCCESS! It's an image!
+                // Send our image `file` to our `readImage` function!
+                readImage(file);
+            } else {
+                errors += file.name + " Unsupported Image extension\n";
+            }
+        }
+        if (errors) {
+            alert("error in loading image:" + errors);
+        }
+    });
+
+
 });
-
-
 
 myApp.onPageInit('form_personal_details', function (page) {
     // Do something here for "about" page
+    myApp.params.swipeBackPage = false;
     if (checkConnection() && CheckBrowser()) {
         //continue
         $$('.get-storage-data').on('click', function () {
@@ -75,6 +247,7 @@ myApp.onPageInit('form_personal_details', function (page) {
                 storedPersonalData = myApp.formGetData('my-form-pd');
                 if (storedPersonalData) {
                     //alert(JSON.stringify(storedData));
+                    localStorage.setItem("personalData", storedPersonalData);
                     mainView.router.load({url: "try2_form_order.html"});
                     //alert(storedData.name);//JSON.stringify(storedData));
                 } else {
@@ -109,5 +282,4 @@ function checkConnection() {
         alert("You are " + connectionStatus + ". Please connect to the internet via Wifi or 3G or 4G");
         return false;
     }
-
 }

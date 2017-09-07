@@ -7,7 +7,7 @@
                 <i class="icon icon-back"></i><span>Back</span>
             </a>
         </div>
-        <div class="center sliding">Order details</div>
+        <div class="center sliding">Crop Picture</div>
         <div class="right">
             <!-- Right link contains only icon - additional "icon-only" class--><a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
         </div>
@@ -19,26 +19,52 @@
         <!-- Scrollable page content-->
         <div class="page-content">
             <!--order details-->
-            <div class="content-block-title">Order details</div>
+            <div class="content-block-title">Upload Picture</div>
             <div class="content-block">
                 <div class="image-editor">
                     <input type="file" class="cropit-image-input" accept="image/png, image/jpeg" id="real-pic">
+                    <div class="content-block-title">File Information</div>
                     <div id="preview2">No image chosen.</div>
+                    <div class="content-block-title">Crop Picture</div>
                     <div class="cropit-preview"  ></div>
-                    <div class="image-size-label">
-                        Resize image
+                    <!--<div class="image-size-label"></div>-->
+                    <!--<input type="range" class="cropit-image-zoom-input" >-->
+                    <div class="list-block">
+                        <ul>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label">Zoom in & out:</div>
+                                        <div class="item-input">
+                                            <div class="range-slider">
+                                                <input type="range" class="cropit-image-zoom-input"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                         <div class="item-title label">Rotate:</div>
+                                    <div class="row">
+                                        <div class="col-50">
+                                            <a href="#" class="button rotate-ccw button-small button-fill color-green">Counterclockwise</a>
+                                        </div>
+                                        <div class="col-50">
+                                            <a href="#" class="button rotate-cw button-small button-fill color-green">Clockwise</a>
+                                        </div>
+                                    </div>
+                                        </div>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-                    <input type="range" class="cropit-image-zoom-input" >
                     <input type="hidden" name="image-data" class="hidden-image-data" />
                     <!--<input type="text" name="haha"/>-->
                 </div>
             </div>
-            <div class="content-block">
-                            <div class="row">
-                <a href="#" class="button rotate-ccw button-small button-fill color-green">Rotate counterclockwise</a>
-                <a href="#" class="button rotate-cw button-small button-fill color-green">Rotate clockwise</a>
-            </div>
-            </div>
+
             <div class="content-block">
                 <div class="row">
                     <div class="col-50">
@@ -49,7 +75,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </div>
 </div>
