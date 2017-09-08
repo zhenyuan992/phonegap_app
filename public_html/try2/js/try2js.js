@@ -53,6 +53,18 @@ function return_html_in_summary_list() {
     }
     return html_list + "</ul>";
 }
+function return_html_personal_details(){
+    var html_list = "<ul>";
+    html_list+= '<li><div class="item-content"><div class="item-title">Name:</div><div class="item-content" >' +storedPersonalData.name+ '</div></div></li>';
+    html_list+= '<li><div class="item-content"><div class="item-title">Email:</div><div class="item-content" >' +storedPersonalData.email+ '</div></div></li>';
+    html_list+= '<li><div class="item-content"><div class="item-title">Contact number:</div><div class="item-content" >' +storedPersonalData.phone+ '</div></div></li>';
+    html_list+= '<li><div class="item-content"><div class="item-title">Address:</div><div class="list-block inset">'
+            +'<ul><li class="item-content">'
+            +storedPersonalData.addr1+'</li><li class="item-content">'+storedPersonalData.addr2+'</li><li class="item-content">'+storedPersonalData.postal
+            +'</li></ul>'
+            +'</div></div></li>'; //ends list block
+    return html_list +"</ul>";
+}
 function add_images_to_sumlist() {
     var order_number = 1;
     for (i = 0; i < orderList.length; i++) {
@@ -73,6 +85,7 @@ myApp.onPageInit('form_sum', function (page) {
     var html_list = return_html_in_summary_list();
     $$("#all-orders").html(html_list);
     add_images_to_sumlist();
+    $$("#all-p-details").html(return_html_personal_details());
     $$('.add-order').on('click', function () {
         //alert(orderDetails.quantity);
         alert("im going to add new order");
@@ -101,11 +114,18 @@ myApp.onPageInit('form_sum', function (page) {
 myApp.onPageInit('form_order_pic', function (page) {
 //try2_form_pic.html must have json orderDetails inside
     var file_sizeee;
+    var finalWidth = 1024; // The desired width for final image output 250 187 1000 748
+    var finalHeight = 850;
     $('.image-editor').cropit();
     $$('.get-order-pic').on('click', function () {
         if (file_sizeee > 1) {
+            var sizeRatio = finalHeight / finalWidth,
+                    newWidth = $('.image-editor').width(),
+                    //newHeight = newWidth * sizeRatio,
+                    newZoom = finalWidth / newWidth;
+            $('.image-editor').cropit('exportZoom', newZoom);
             var imageData = $('.image-editor').cropit('export', {
-                originalSize: true,
+                originalSize: false,
                 quality: 1
             });
             var current_count;
@@ -116,10 +136,14 @@ myApp.onPageInit('form_order_pic', function (page) {
                 current_count = 0;
                 orderList = [1];
             }
-            localStorage.setItem("pic" + current_count.toString(), imageData);
-            localStorage.setItem("order" + current_count.toString(), JSON.stringify(orderDetails));
-            alert("im about to go to summary");
-            mainView.router.load({url: "try2_form_summary.html"});
+            try {
+                localStorage.setItem("pic" + current_count.toString(), imageData);
+                localStorage.setItem("order" + current_count.toString(), JSON.stringify(orderDetails));
+                alert("im about to go to summary");
+                mainView.router.load({url: "try2_form_summary.html"});
+            } catch (err) {
+                alert(err.message);
+            }
         } else {
             alert("please choose a photo before submission.");
         }
@@ -164,10 +188,6 @@ myApp.onPageInit('form_order_pic', function (page) {
                         wrong_size = "<tr><th>WARNING!!</th><th> Image should be 1500x2100 to have good quality</th></tr>";
                     }
                 }
-
-                //"<div class='data-table'><table><thead><tr><th class='label-cell'>File</th>"
-                // + "</tr></thead>"+
-                //"<tbody><tr><td class='label-cell'>"+ file.name+"</td></tr></tbody>"+
                 var imageInfo = "<div class='content-block'> <table>" +
                         "<tr><th>File Name</th><th>" + file.name + "</th></tr>" +
                         "<tr><th>Image dimension</th><th>" + image.width + "×" + image.height + "</th></tr>" +
@@ -214,15 +234,13 @@ myApp.onPageInit('form_order_pic', function (page) {
             alert("error in loading image:" + errors);
         }
     });
-
-
 });
 
 myApp.onPageInit('form_personal_details', function (page) {
     // Do something here for "about" page
     myApp.params.swipeBackPage = false;
     if (checkConnection() && CheckBrowser()) {
-        //continue
+        // continue
         $$('.get-storage-data').on('click', function () {
             var check_fields = ["name", "email", "phone", "addr1", "postal"];
             var passed_checks = true;
