@@ -102,7 +102,7 @@ myApp.onPageInit('form_order_pic', function (page) {
 //try2_form_pic.html must have json orderDetails inside
     var file_sizeee;
     $('.image-editor').cropit();
-    $$('.get-order').on('click', function () {
+    $$('.get-order-pic').on('click', function () {
         if (file_sizeee > 1) {
             var imageData = $('.image-editor').cropit('export', {
                 originalSize: true,
