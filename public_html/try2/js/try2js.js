@@ -19,7 +19,7 @@ myApp.onPageInit('form_order', function (page) {
     // try2_form_order.html // specify the photosize, quantity, message 
     $$('.get-order').on('click', function () {
         orderDetails = myApp.formGetData('my-form-order');
-        alert(orderDetails.quantity);
+        //alert(orderDetails.quantity);
         mainView.router.load({url: "try2_form_pic.html"});
     });
 });
@@ -28,10 +28,10 @@ function list_order_template(orderN, size, qty, msg) {//given some inputs, retur
     //html_string += "size" + size + qty + name;
     html_string += '<div class="item-content">';
     html_string += '<div class="item-media" ' + '>';
-    html_string += '<img src="images/no_image.png" width="44" id="media' + orderN + '"></div> ';
+    html_string += '<img src="images/no_image.png" width="60" id="media' + orderN + '"></div> ';
     html_string += '<div class="item-inner"><div class="item-title-row">';
-    html_string += '<div class="item-title">Order Number: ' + orderN + ' </div>';
-    html_string += '<div class="item-after">' + qty + 'X</div>';
+    html_string += '<div class="item-title">Quantity: ' + qty+ ' pieces</div>';
+    html_string += '<div class="item-after"><span>Remove</span><i class="f7-icons" id="ord'+orderN+'">close_round</i>' + '</div>';
     html_string += '</div>';
     html_string += '<div class="item-subtitle" id="mediaaa">size=' + size + '</div>';
     html_string += '<div class="item-text">message=' + msg + '</div></div></div>';
@@ -44,8 +44,6 @@ function return_html_in_summary_list() {
     for (i = 0; i < orderList.length; i++) {
         if (orderList[i] === 1) {
             var orderD = localStorage.getItem("order" + i.toString());
-            //var img_data = localStorage.getItem("pic" + i.toString());
-            //document.getElementById("pic_to_upload").src = img_data;
             var orderD1 = JSON.parse(orderD);
             html_list += list_order_template(order_number, orderD1.photosize, orderD1.quantity, orderD1.message);
             order_number += 1;
@@ -53,29 +51,24 @@ function return_html_in_summary_list() {
     }
     return html_list + "</ul>";
 }
-function return_html_personal_details(){
+function return_html_personal_details() {
     var html_list = "<ul>";
-    html_list+= '<li><div class="item-content"><div class="item-title">Name:</div><div class="item-content" >' +storedPersonalData.name+ '</div></div></li>';
-    html_list+= '<li><div class="item-content"><div class="item-title">Email:</div><div class="item-content" >' +storedPersonalData.email+ '</div></div></li>';
-    html_list+= '<li><div class="item-content"><div class="item-title">Contact number:</div><div class="item-content" >' +storedPersonalData.phone+ '</div></div></li>';
-    html_list+= '<li><div class="item-content"><div class="item-title">Address:</div><div class="list-block inset">'
-            +'<ul><li class="item-content">'
-            +storedPersonalData.addr1+'</li><li class="item-content">'+storedPersonalData.addr2+'</li><li class="item-content">'+storedPersonalData.postal
-            +'</li></ul>'
-            +'</div></div></li>'; //ends list block
-    return html_list +"</ul>";
+    html_list += '<li><div class="item-content"><div class="item-title">Name:</div><div class="item-content" >' + storedPersonalData.name + '</div></div></li>';
+    html_list += '<li><div class="item-content"><div class="item-title">Email:</div><div class="item-content" >' + storedPersonalData.email + '</div></div></li>';
+    html_list += '<li><div class="item-content"><div class="item-title">Contact number:</div><div class="item-content" >' + storedPersonalData.phone + '</div></div></li>';
+    html_list += '<li><div class="item-content"><div class="item-title">Address:</div><div class="list-block inset">'
+            + '<ul><li class="item-content">'
+            + storedPersonalData.addr1 + '</li><li class="item-content">' + storedPersonalData.addr2 + '</li><li class="item-content">' + storedPersonalData.postal
+            + '</li></ul>'
+            + '</div></div></li>'; //ends list block
+    return html_list + "</ul>";
 }
 function add_images_to_sumlist() {
     var order_number = 1;
     for (i = 0; i < orderList.length; i++) {
         if (orderList[i] === 1) {
-            //var orderD = localStorage.getItem("order" + i.toString());
             var img_data = localStorage.getItem("pic" + i.toString());
-            //document.getElementById("pic_to_upload").src = img_data;
-            //$$("#mediaa").src("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAQGSURBVHhe7VpZyE1RFP4ze5F5lkwPPPAnYyQhyZgQ/c8SHiSSxKvIVMQTHsQbkcgYD0qmBx4MT+YyJPOUEN/3d462/e+91z73P/fcc8/du1b33Lu/vfZa31177eHsurpQAgOBgcBAYCARA/2BHhvJGHzmQWJ7aFvZSjdo3g35CvmTU/kGu/ZAuqfNwgoofJFTp01/xkvYujINEqZCybUqclwn4zpsn1YKEQPQ6HAVO64TcQS+DPQhoh1AGyEfC+R8TAZ92gRpbyNiASruF9BxPRro40KVhF74cqoGHNeJOA2fe5OImzXofEzGLRKQ1zk9K7uMBLwFMSb5YCDstwXL9l8M+B8OPOt0x6nDZg/71vG00YY3kdpEwQYo6ATpaJCu+O2k1ul8C5bt+0DuKvj3eK534IejjpjY0Ht47uvAz0OdSgJzGW002c7f1hsIa0KAtHDYrCj5FTmJD2thsokdeuQCRnUPFfxZAc8EThti/VsE/BQfAuYISnZoBAwR8OcV/BM8t3XgW6PusYK/KOgepBGwS8DP8iFgtqBku0bAYAF/TsHTOYkARkn8j14QdHN1p0bATgE/Mw0C1Ajg+JMIUCPgKfBtHEa2Qh2jJCZAigASoOYAKQK8CJB2Ucc0FicKrKurS26lXVtVbrnVmeOBoHuCZstxAb/cJwIaFweWwoys7xO4abIVJlR9qlrnwK81GDjdgT+k4T/hez8H/oYPAQy/fZCWmiJmXNvWeLWh0xH47ZmhQx5amBItcw/r9Ln6OX6rN+hfZcCyLbfAjUtcpbTA814L3roSvIMG3D0thTC58JDBtTq7jPo1kGWQAxZn1PYcShxuFH1Y6f18B+ZgpJt9XBJseRXZTNu5u73twIelcFZr7rz2E3aDPTA+tkE4hvP6L5Vq19UoHzEnxbI/yifMa0zs/8qMghFwRnXO53lRwQjY6uO0iikaAW/gHH0aChmmSQcTOUUjwJU3lgQCDAzUUgQsLjUCfqKhS0qdrrJul5gAbkjGQ7j/5imMSVg3CfLaMZtwXp4MGQUZXQahXm6RTwgzWmICpLM5NaKuODrn26csysi0CZCOplSn+C/bQjorAhgJrmGVOALSIoCJNovCWyuBAAcJIQJMYehaB4QhkGDgupJgyAEJiGwONCTBMAuEaTCf64D/Lic1Z5ALbbnPyOVCaG4ZnVZV86JFLgk4CsP4frEzpEsZhHp7QninOZcE0Ci+IX4H4VWYtIV6PwvO04aKLYWzPviw9RcIqNReIESAx/jMgiTjEOBZua1zvjf0LaZbGFk4laSPBpMzvKFhU8ILiL6lGl6yGtcjvKHFszSe/o5ThN85t/oW3g7Vdaj6KvlMu7hK5H3EUAIDgYHAQGDgLwGuWgcmXK2vAAAAAElFTkSuQmCC");
-            //var orderD1 = JSON.parse(orderD);
             $$('#media' + order_number).attr('src', img_data);
-            //html_list += list_order_template(order_number, orderD1.photosize, orderD1.quantity, orderD1.message);
             order_number += 1;
         }
     }
@@ -84,8 +77,9 @@ myApp.onPageInit('form_sum', function (page) {
     // alter the list view to display thumbnail of orders
     var html_list = return_html_in_summary_list();
     $$("#all-orders").html(html_list);
-    add_images_to_sumlist();
+    add_images_to_sumlist();//and links to remove
     $$("#all-p-details").html(return_html_personal_details());
+    
     $$('.add-order').on('click', function () {
         //alert(orderDetails.quantity);
         alert("im going to add new order");
@@ -101,13 +95,37 @@ myApp.onPageInit('form_sum', function (page) {
         });
     });
     $$('.submit-order').on('click', function () {
-        //orderDetails = myApp.formGetData('my-form-order');
-        //alert(orderDetails.quantity);
-        alert("im submitting all orders, going back home page");
-        mainView.router.back({
-            url: "try2.html",
-            force: true
-        });
+        if (!Date.now) {
+            Date.now = function now() {
+                return new Date().getTime();
+            };
+        }
+        var orderID = Date.now();
+        if (add_personal_details_into_invisform(orderID)) {
+            submit_invisform_to_google();
+        }
+        var good = true;
+        for (i = 0; i < orderList.length; i++) {
+            if (orderList[i] === 1) {
+                var dataa = localStorage.getItem("pic" + i.toString());
+                var orderD = localStorage.getItem("order" + i.toString());
+                var orderD1 = JSON.parse(orderD); // quantity photosize message
+                var image_data = storage_to_imagefile(dataa);
+                var pic_file_name = "pic" + i.toString() + "_Q" + orderD1.quantity + "_" + orderD1.photosize + ".png";
+                if (!upload_pic("order_id" + orderID, pic_file_name, image_data)) {
+                    good = false;
+                }
+            }
+        }
+        alert("have submitted all orders, going back home page\nhave files been sent?" + good);
+        if (good) {
+            mainView.router.back({
+                url: "try2.html",
+                force: true
+            });
+        } else {
+            alert("not yet done!!");
+        }
     });
 });
 
@@ -139,8 +157,15 @@ myApp.onPageInit('form_order_pic', function (page) {
             try {
                 localStorage.setItem("pic" + current_count.toString(), imageData);
                 localStorage.setItem("order" + current_count.toString(), JSON.stringify(orderDetails));
-                alert("im about to go to summary");
-                mainView.router.load({url: "try2_form_summary.html"});
+                var myClass = $(this).attr("class");
+                //alert(myClass[25]);
+                if (myClass[25] === "2") {
+                    mainView.router.load({url: "try2_form_summary.html"});
+                } else if (myClass[25] === "1"){
+                    mainView.router.load({url: "try2_form_order.html"});
+                } else{
+                    return eorrrer;
+                }              
             } catch (err) {
                 alert(err.message);
             }
@@ -265,7 +290,7 @@ myApp.onPageInit('form_personal_details', function (page) {
                 storedPersonalData = myApp.formGetData('my-form-pd');
                 if (storedPersonalData) {
                     //alert(JSON.stringify(storedData));
-                    localStorage.setItem("personalData", storedPersonalData);
+                    localStorage.setItem("personalData", JSON.stringify(storedPersonalData));
                     mainView.router.load({url: "try2_form_order.html"});
                     //alert(storedData.name);//JSON.stringify(storedData));
                 } else {
