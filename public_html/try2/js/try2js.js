@@ -30,8 +30,8 @@ function list_order_template(orderN, size, qty, msg) {//given some inputs, retur
     html_string += '<div class="item-media" ' + '>';
     html_string += '<img src="images/no_image.png" width="60" id="media' + orderN + '"></div> ';
     html_string += '<div class="item-inner"><div class="item-title-row">';
-    html_string += '<div class="item-title">Quantity: ' + qty+ ' pieces</div>';
-    html_string += '<div class="item-after"><span>Remove</span><i class="f7-icons" id="ord'+orderN+'">close_round</i>' + '</div>';
+    html_string += '<div class="item-title">Quantity: ' + qty + ' pieces</div>';
+    html_string += '<div class="item-after"><span>Remove </span><icon class="f7-icons remove_pic" id="ord' + orderN + '">close_round</icon>' + '</div>';
     html_string += '</div>';
     html_string += '<div class="item-subtitle" id="mediaaa">size=' + size + '</div>';
     html_string += '<div class="item-text">message=' + msg + '</div></div></div>';
@@ -73,22 +73,58 @@ function add_images_to_sumlist() {
         }
     }
 }
-myApp.onPageInit('form_sum', function (page) {
-    // alter the list view to display thumbnail of orders
+function update_sum_lists() {
     var html_list = return_html_in_summary_list();
     $$("#all-orders").html(html_list);
     add_images_to_sumlist();//and links to remove
     $$("#all-p-details").html(return_html_personal_details());
-    
+}
+function count_orders() {
+    var order_count = 0;
+    for (i = 0; i < orderList.length; i++) {
+        if (orderList[i] === 1) {
+            order_count += 1;
+        }
+    }
+    return order_count;
+}
+function add_remove_js(){
+    $$('.remove_pic').on('click', function () {
+        var remove_id = $(this).attr("id");
+        //alert("clicked:" + remove_id);
+        alert("Removing 1 order!");
+        if (count_orders()>1){
+            var order_number = 1;
+            for (i = 0; i < orderList.length; i++) {
+                if (orderList[i] === 1) {
+                    if (("ord" + order_number) === (remove_id)) {
+                        orderList[i] = 0;
+                    }
+                    order_number += 1;
+                }
+            }
+            update_sum_lists();
+            add_remove_js();
+        } else{
+            alert("You have no more orders!!");
+            orderList = false;
+            mainView.router.load({
+            url: "try2_form_order.html"
+        });
+        }
+    });
+}
+myApp.onPageInit('form_sum', function (page) {
+    // alter the list view to display thumbnail of orders
+    update_sum_lists();
+    add_remove_js();
     $$('.add-order').on('click', function () {
-        //alert(orderDetails.quantity);
         alert("im going to add new order");
         mainView.router.load({
             url: "try2_form_order.html"
         });
     });
     $$('.cancel-orders').on('click', function () {
-        //alert(orderDetails.quantity);
         mainView.router.back({
             url: "try2.html",
             force: true
@@ -161,11 +197,11 @@ myApp.onPageInit('form_order_pic', function (page) {
                 //alert(myClass[25]);
                 if (myClass[25] === "2") {
                     mainView.router.load({url: "try2_form_summary.html"});
-                } else if (myClass[25] === "1"){
+                } else if (myClass[25] === "1") {
                     mainView.router.load({url: "try2_form_order.html"});
-                } else{
+                } else {
                     return eorrrer;
-                }              
+                }
             } catch (err) {
                 alert(err.message);
             }
@@ -195,7 +231,7 @@ myApp.onPageInit('form_order_pic', function (page) {
                 selected_size = orderDetails.photosize;
                 file_sizeee = image.width;
                 var wrong_size = "";
-                // 3R is 1050 x 1500 4R is 1200 x 1800 5R is 1500 2100 6r 1800 2400
+                // 10cm10 is 945pix, 15cm 1417, 7.5cm 709px, 5cm 472px,
                 if (selected_size === "4R") {
                     if (image.width < 800) {
                         wrong_size = "<tr><th>WARNING!!</th><th> Image should be 1050x1500 to have good quality</th></tr>";
